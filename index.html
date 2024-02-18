@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Will You Be My Valentine?</title>
-<link rel="icon" href="favicon.png" type="image/png">  
+<title>Will You Be My Valentine?</title>
 <style>
   body {
     font-family: "Arial", sans-serif;
@@ -212,7 +211,7 @@
 
       for (let i = 0; i < 10; i++) {
         var heart = document.createElement("span");
-        heart.innerHTML = ❤️";
+        heart.innerHTML = "❤️";
         heart.classList.add("heart");
         hearts.appendChild(heart);
 
@@ -251,7 +250,7 @@
     // Add 'selected' class to the clicked button
     button.classList.add('selected');
 
-    response.innerHTML = "Since I am broke and can only afford a courthouse wedding, where would you like to get married? haha &#128514<br>";
+    response.innerHTML = "Since I am broke and can only afford a courthouse wedding, where would you like to get married?<br>";
     response.innerHTML += "<button onclick=\"selectLocation('Coal County')\">Coal County</button>";
     response.innerHTML += "<button onclick=\"selectLocation('Garvin County')\">Garvin County</button>";
     response.innerHTML += "<button onclick=\"selectLocation('Grady County')\">Grady County</button>";
