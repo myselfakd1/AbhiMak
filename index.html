@@ -1,311 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Will You Be My Valentine?</title>
-<link rel="icon" href="favicon.png" type="image/png">  
-<style>
-  body {
-    font-family: "Arial", sans-serif;
-    background-color: #ffe6e6;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative; /* Added */
-  }
-  #content {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.5s, transform 0.5s;
-    position: relative;
-  }
-  #content.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  #hearts {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    overflow: hidden;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .heart {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    color: rgba(255, 77, 108, 0.7);
-    animation: flyUp 4s linear forwards;
-    opacity: 0;
-  }
-  @keyframes flyUp {
-    0% {
-      transform: translateY(100%);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-200%);
-      opacity: 0;
-    }
-  }
-  #question {
-    font-size: 28px;
-    margin-top: 40px;
-    color: #ff4d6c;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
-  #yesResponse {
-    font-size: 24px;
-    margin-top: 20px;
-    color: #333;
-    display: none;
-    transition: opacity 0.5s ease-in-out;
-  }
-  #yesResponse.show {
-    display: block;
-  }
-  #yesResponse p {
-    margin-bottom: 10px;
-  }
-  button {
-    background-color: #ff4d6c;
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    padding: 15px 30px;
-    font-size: 18px;
-    margin-top: 40px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    position: relative;
-    z-index: 1;
-  }
-  button:hover {
-    background-color: #ff6381;
-    transform: scale(1.05);
-  }
-  button:hover::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 25px;
-    animation: wobble 0.5s infinite alternate;
-  }
-  @keyframes wobble {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(10px);
-    }
-    100% {
-      transform: translateX(5px);
-    }
-  }
-  .pink-button {
-    background-color: #ff4d6c;
-  }
-  #yesButton {
-    margin-right: 15px;
-  }
-  #noButton {
-    margin-left: 15px;
-    pointer-events: none;
-  }
-  #noButtonMessage {
-    color: #ff4d6c;
-    font-size: 18px;
-    margin-top: 20px;
-  }
-  #credits {
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-    position: fixed; /* Changed to fixed */
-    bottom: 0; /* Adjusted bottom position */
-    width: 100%; /* Added */
-    background-color: rgba(255, 255, 255, 0.8); /* Added */
-    border-top: 1px solid #ccc; /* Added */
-    padding: 10px 0; /* Added */
-    opacity: 0.7; /* Adjusted opacity */
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <style>
+        /* CSS styles here */
+        body {
+            background-color: #ffcccc; /* Pink background */
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ff6666; /* Red heart color */
+            animation: heartbeat 1s infinite alternate; /* Heartbeat animation */
+        }
+
+        @keyframes heartbeat {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 20px;
+            padding: 20px;
+        }
+
+        .photo-gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .photo-gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-gallery-item img:hover {
+            transform: scale(1.1);
+        }
+
+        .photo-gallery-item .description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        footer {
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* Styles for password protection */
+        .password-form {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .password-input {
+            padding: 8px 16px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .submit-button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<audio id="bgmusic" src="true.mp3" loop></audio>
-<div id="content">
-  <div id="hearts"></div>
-  <div id="noButtonMessage">💔 My Love, the "No" button doesn't work. Let's make this moment unforgettable by clicking "Yes." 💖</div>
-  <div id="question">🌹 Makayla, Will you be my Valentine? 💖</div>
-  <button id="yesButton" onclick="respond(true)">Yes, Forever Yours! 💕</button>
-  <button id="noButton">NO</button>
-  <div id="yesResponse">
-    <p>🥰 Yay! My Heart is Yours! 🎉</p>
-    <p>Every moment with you is like a beautiful dream come true. Let's make this Valentine's Day unforgettable, Makayla. 💖</p>
-    <div id="marriageQuestion">💍 My Dear, We're already engaged to be married! Shall we plan our wedding? 💒</div>
-    <button id="yesMarriageButton" onclick="showDateOptions()">Yes, Let's start planning! 💒</button>
-    <button id="noMarriageButton">No</button>
-  </div>
-  <div id="response"></div>
-</div>
+    <header>
+        <h1 id="animated-heart">Photo Gallery</h1>
+    </header>
+    <main>
+        <!-- Password Form -->
+        <div class="password-form">
+            <form id="password-form">
+                <input type="password" id="password" class="password-input" placeholder="Enter Password">
+                <button type="submit" class="submit-button">Enter</button>
+            </form>
+            <p class="error-message" id="error-message"></p>
+        </div>
 
-<div id="dateOptionsPage" style="display: none;">
-  <div id="question">When would you like to get married?</div>
-  <div class="date-options">
-    <button onclick="selectDate(this)">February 20</button>
-    <button onclick="selectDate(this)">February 21</button>
-    <button onclick="selectDate(this)">February 22</button>
-    <button onclick="selectDate(this)">February 23</button>
-    <button onclick="selectDate(this)">February 24</button>
-    <button onclick="selectDate(this)">February 25</button>
-    <button onclick="selectDate(this)">February 26</button>
-    <button onclick="selectDate(this)">February 27</button>
-  </div>
-</div>
+        <!-- Photo Gallery (Initially hidden) -->
+        <div class="photo-gallery" style="display: none;">
+            <!-- Placeholder images with descriptions -->
+            <div class="photo-gallery-item">
+                <img src="placeholder1.jpg" alt="Placeholder Image 1">
+                <div class="description">Description for Image 1</div>
+            </div>
+            <!-- Add more images and descriptions as needed -->
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Photo Gallery. All rights reserved.</p>
+    </footer>
 
-<div id="transitionLayer" class="transition-layer" onclick="hideTransition()"></div>
+    <!-- JavaScript for Animated Heart and Password Protection -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <script>
+        var heart = document.getElementById('animated-heart');
+        setInterval(function() {
+            heart.style.transform = (heart.style.transform === 'scale(1)') ? 'scale(1.1)' : 'scale(1)';
+        }, 1000);
 
-<!-- Credits -->
-<div id="credits">
-  Background music by <a href="https://freemusicarchive.org/music/Derek_Clegg/contact">Derek Clegg</a> licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
-  Track: <a href="https://freemusicarchive.org/music/Derek_Clegg/Borish_Songs_For_L/Derek_Clegg_-_Borish_Songs_For_L_-_06_True_Love/">True Love</a>
-</div>
+        // Password validation function
+        document.getElementById("password-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
 
-<script>
-  setTimeout(function() {
-    var content = document.getElementById("content");
-    content.classList.add("show");
-  }, 100);
+            var password = document.getElementById("password").value;
+            var errorMessage = document.getElementById("error-message");
 
-  function respond(answer) {
-    var yesResponse = document.getElementById("yesResponse");
-    var content = document.getElementById("content");
-    var hearts = document.getElementById("hearts");
-    var question = document.getElementById("question");
-    var yesButton = document.getElementById("yesButton");
-    var noButton = document.getElementById("noButton");
+            // Hash the entered password using SHA-256
+            var hashedPassword = sha256(password);
 
-    if (answer) {
-      yesResponse.classList.add("show");
-      question.style.display = "none";
-      yesButton.style.display = "none";
-      noButton.style.display = "none";
-
-      var bgmusic = document.getElementById("bgmusic");
-      bgmusic.play();
-
-      for (let i = 0; i < 10; i++) {
-        var heart = document.createElement("span");
-        heart.innerHTML = ❤️";
-        heart.classList.add("heart");
-        hearts.appendChild(heart);
-
-        var randomX = Math.random() * 100;
-        var randomDelay = Math.random() * 4 + "s";
-        heart.style.left = randomX + "%";
-        heart.style.animationDelay = randomDelay;
-      }
-    } else {
-      response.innerHTML = "That's okay. Give me my ring back, Honey!";
-      yesButton.style.display = "none";
-      noButton.style.display = "none";
-    }
-  }
-  
-  function showDateOptions() {
-    var dateOptionsPage = document.getElementById("dateOptionsPage");
-    var marriageQuestion = document.getElementById("marriageQuestion");
-    var yesMarriageButton = document.getElementById("yesMarriageButton");
-    var noMarriageButton = document.getElementById("noMarriageButton");
-
-    dateOptionsPage.style.display = "block";
-    marriageQuestion.style.display = "none";
-    yesMarriageButton.style.display = "none";
-    noMarriageButton.style.display = "none";
-  }
-
-  function selectDate(button) {
-    var response = document.getElementById("response");
-    var dateOptionsPage = document.getElementById("dateOptionsPage");
-    
-    // Remove 'selected' class from all date buttons
-    var buttons = document.querySelectorAll('.date-options button');
-    buttons.forEach(btn => btn.classList.remove('selected'));
-
-    // Add 'selected' class to the clicked button
-    button.classList.add('selected');
-
-    response.innerHTML = "Since I am broke and can only afford a courthouse wedding, where would you like to get married? haha &#128514<br>";
-    response.innerHTML += "<button onclick=\"selectLocation('Coal County')\">Coal County</button>";
-    response.innerHTML += "<button onclick=\"selectLocation('Garvin County')\">Garvin County</button>";
-    response.innerHTML += "<button onclick=\"selectLocation('Grady County')\">Grady County</button>";
-    response.innerHTML += "<button onclick=\"selectLocation('Hughes County')\">Hughes County</button>";
-    response.innerHTML += "<button onclick=\"selectLocation('McClain County')\">McClain County</button>";
-    
-    response.innerHTML += "<br><br>Note: These counties are selected based on equal distance from both of us.";
-    
-    dateOptionsPage.style.display = "none";
-    response.style.display = "block";
-  }
-
-  function selectLocation(location) {
-    var response = document.getElementById("response");
-    var selectedDate = document.querySelector(".date-options button.selected").textContent;
-
-    response.innerHTML = "Great choice! We'll plan our courthouse wedding in " + location + " on " + selectedDate + ". 💒";
-  }
-
-  function respondMarriage(answer) {
-    var transitionLayer = document.getElementById("transitionLayer");
-    var marriageQuestion = document.getElementById("marriageQuestion");
-    var yesMarriageButton = document.getElementById("yesMarriageButton");
-    var noMarriageButton = document.getElementById("noMarriageButton");
-    var response = document.getElementById("response");
-
-    transitionLayer.style.display = "block";
-    setTimeout(function() {
-      if (!answer) {
-        response.innerHTML = "No worries! We'll take our time. Enjoying the engagement period sounds perfect. 💖";
-
-        marriageQuestion.style.display = "none";
-        yesMarriageButton.style.display = "none";
-        noMarriageButton.style.display = "none";
-        response.style.display = "block";
-      }
-
-      transitionLayer.style.opacity = 0;
-      setTimeout(function() {
-        transitionLayer.style.display = "none";
-      }, 500);
-    }, 100);
-  }
-
-  function hideTransition() {
-    var transitionLayer = document.getElementById("transitionLayer");
-
-    transitionLayer.style.opacity = 0;
-    setTimeout(function() {
-      transitionLayer.style.display = "none";
-    }, 500);
-  }
-</script>
-
-
+            // Fetch the contents of the password.txt file from your GitHub repository
+            fetch('https://raw.githubusercontent.com/myselfakd1/AbhiMak/main/password.txt')
+                .then(response => response.text())
+                .then(data => {
+                    // Compare the hashed password with the hash retrieved from the file
+                    if (hashedPassword === data.trim()) {
+                        // Show photo gallery and hide password form
+                        document.querySelector('.password-form').style.display = 'none';
+                        document.querySelector('.photo-gallery').style.display = 'grid';
+                    } else {
+                        errorMessage.textContent = "Incorrect password. Please try again.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching password:', error);
+                    errorMessage.textContent = "Error fetching password. Please try again later.";
+                });
+        });
+    </script>
 </body>
 </html>
