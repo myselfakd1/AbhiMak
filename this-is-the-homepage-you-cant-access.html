@@ -215,6 +215,32 @@
         <button id="submit-button" onclick="checkPassword()">Submit</button>
         <p id="password-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
     </div>
+	<script>
+        // Password for accessing the page content
+        const correctPassword = "password"; // Change this to your desired password
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("password-input").value;
+            const passwordError = document.getElementById("password-error");
+            const mainContent = document.querySelector("main");
+
+            if (passwordInput === correctPassword) {
+                passwordError.style.display = "none";
+                document.getElementById("password-container").style.display = "none";
+                mainContent.style.display = "block"; // Show the main content
+            } else {
+                passwordError.style.display = "block";
+            }
+        }
+
+        // Listen for Enter key press on the password input field
+        document.getElementById("password-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+    </script>
+
     <header>
         <h1 id="animated-heart">Our Love Story</h1>
         <nav>
