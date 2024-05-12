@@ -89,6 +89,14 @@
             left: 0;
             width: 100%;
         }
+        .white-box {
+        width: 300px;
+        height: 200px;
+        background-color: #ffffff; /* White background color for the box */
+        margin: 20px auto;
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5); /* Box shadow for depth */
+        padding: 20px; /* Padding inside the box */
     </style>
 </head>
 <body>
@@ -135,6 +143,54 @@
                 return false; // Prevent form submission
             }
         }
+        document.addEventListener('DOMContentLoaded', getWeather);
+
+    function getWeather() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(fetchWeatherData, handleLocationError);
+        } else {
+            displayErrorMessage('Geolocation is not supported by this browser.');
+        }
+    }
+
+    function handleLocationError(error) {
+        displayErrorMessage('Error getting user location. Please allow location access and try again.');
+    }
+
+    function fetchWeatherData(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const apiKey = 'YOUR_API_KEY';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                displayWeatherData(data);
+            })
+            .catch(error => {
+                displayErrorMessage('Error fetching weather data. Please try again later.');
+            });
+    }
+
+    function displayWeatherData(data) {
+        const weatherInfo = `
+            <h2>Weather Information</h2>
+            <p><strong>Temperature:</strong> ${kelvinToCelsius(data.main.temp)}°C</p>
+            <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+            <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+            <p><strong>Description:</strong> ${data.weather[0].description}</p>
+        `;
+        document.getElementById('weather-info').innerHTML = weatherInfo;
+    }
+
+    function displayErrorMessage(message) {
+        document.getElementById('weather-info').innerText = message;
+    }
+
+    function kelvinToCelsius(kelvin) {
+        return (kelvin - 273.15).toFixed(2);
+    }
     </script>
 </body>
 </html>
