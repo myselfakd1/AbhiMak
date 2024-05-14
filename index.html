@@ -150,52 +150,75 @@
         }
         document.addEventListener('DOMContentLoaded', getWeather);
 
-        function getWeather() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(fetchWeatherData, handleLocationError);
-            } else {
-                displayErrorMessage('Geolocation is not supported by this browser.');
-            }
-        }
+function getWeather() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(fetchWeatherData, handleLocationError);
+    } else {
+        displayErrorMessage('Geolocation is not supported by this browser.');
+    }
+}
 
-        function handleLocationError(error) {
-            displayErrorMessage('Error getting user location. Please allow location access and try again.');
-        }
+function handleLocationError(error) {
+    displayErrorMessage('Error getting user location. Please allow location access and try again.');
+}
 
-        function fetchWeatherData(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const apiKey = 'f23641220737759e5989d85792910e50';
-            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+function fetchWeatherData(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const apiKey = 'f23641220737759e5989d85792910e50';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
 
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    displayWeatherData(data);
-                })
-                .catch(error => {
-                    displayErrorMessage('Error fetching weather data. Please try again later.');
-                });
-        }
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            displayWeatherData(data);
+        })
+        .catch(error => {
+            displayErrorMessage('Error fetching weather data. Please try again later.');
+        });
+}
 
-        function displayWeatherData(data) {
-            const weatherInfo = `
-                <h2>Weather Information</h2>
-                <p><strong>Temperature:</strong> ${kelvinToCelsius(data.main.temp)}°C</p>
-                <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
-                <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
-                <p><strong>Description:</strong> ${data.weather[0].description}</p>
-            `;
-            document.getElementById('weather-info').innerHTML = weatherInfo;
-        }
+function displayWeatherData(data) {
+    const weatherInfo = `
+        <h2>Weather Information</h2>
+        <p><strong>Temperature:</strong> ${kelvinToFahrenheit(data.main.temp)}°F</p>
+        <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+        <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+        <p><strong>Message:</strong> ${getCaringMessage(data.weather[0].main)}</p>
+    `;
+    document.getElementById('weather-info').innerHTML = weatherInfo;
+}
 
-        function displayErrorMessage(message) {
-            document.getElementById('weather-info').innerText = message;
-        }
+function displayErrorMessage(message) {
+    document.getElementById('weather-info').innerText = message;
+}
 
-        function kelvinToCelsius(kelvin) {
-            return (kelvin - 273.15).toFixed(2);
-        }
+function kelvinToFahrenheit(kelvin) {
+    return ((kelvin - 273.15) * 9/5 + 32).toFixed(2);
+}
+
+function getCaringMessage(weatherCondition) {
+    const messages = {
+        Clear: "The sky is clear today. Enjoy the sunshine and have a beautiful day!",
+        Clouds: "It's a bit cloudy. Remember, your smile can brighten any day!",
+        Rain: "It's raining outside. Don't forget to take your umbrella. Stay dry!",
+        Snow: "Snow is falling. Bundle up and stay warm!",
+        Thunderstorm: "There's a thunderstorm. Stay safe and cozy indoors!",
+        Drizzle: "A light drizzle is in the air. Perfect for a calm and peaceful walk, but don't forget your umbrella!",
+        Mist: "It's misty outside. Drive safely and take your time.",
+        Smoke: "There's some smoke in the air. Take care and try to stay indoors if possible.",
+        Haze: "The weather is hazy. Stay cool and drink plenty of water.",
+        Dust: "Dusty winds are blowing. Protect your eyes and wear a mask if you go out.",
+        Fog: "The fog is thick. Drive carefully and keep your lights on.",
+        Sand: "It's sandy outside. Be cautious if you need to go out.",
+        Ash: "Ash is in the air. Stay indoors and keep windows closed if you can.",
+        Squall: "There's a squall. Secure loose items and stay safe indoors.",
+        Tornado: "Tornado alert! Please take shelter immediately and stay safe."
+    };
+
+    return messages[weatherCondition] || "No matter the weather, take care and stay safe!";
+}
+
     </script>
 </body>
 </html>
