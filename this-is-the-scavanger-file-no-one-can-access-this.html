@@ -229,7 +229,7 @@
         <section class="question-section">
             <div class="question-container">
                 <h2>Question 3</h2>
-                <p class="question">What is my favorite food?</p>
+                <p class="question">What is your favorite color?</p>
                 <input type="text" id="answer-input-3" onkeypress="handleKeyPress(event, 3)">
                 <button onclick="checkAnswer(3)">Submit Answer</button>
                 <!-- Message box within the main container -->
@@ -242,7 +242,7 @@
         <section class="question-section">
             <div class="question-container">
                 <h2>Question 4</h2>
-                <p class="question">What is my favorite movie?</p>
+                <p class="question">What month did I propose you?</p>
                 <input type="text" id="answer-input-4" onkeypress="handleKeyPress(event, 4)">
                 <button onclick="checkAnswer(4)">Submit Answer</button>
                 <!-- Message box within the main container -->
@@ -318,7 +318,7 @@
         var questions = [
             "Where did we first meet?",
             "What is my favorite color?",
-            "What is my favorite food?",
+            "What is your favorite color?",
             "What is my favorite movie?",
             "What is my favorite season?",
             "What is my dream vacation destination?",
@@ -326,13 +326,13 @@
         ];
 
         var correctAnswers = [
-            "place answer 1 here", // Fill in the correct answer for Question 1
-            "place answer 2 here",
-            "place answer 3 here",
-            "place answer 4 here",
-            "place answer 5 here",
-            "place answer 6 here",
-            "place answer 7 here"
+    ["okc", "oklahoma city","Oklahoma City","OklahomaCity","OKC","Oklahomacity","oklahomacity"],  // Multiple possible answers for Question 1
+    ["purple","Purple"],          // Multiple possible answers for Question 2
+    ["green", "Green"],        // Multiple possible answers for Question 3
+    ["inception", "titanic"],  // Multiple possible answers for Question 4
+    ["summer", "spring"],      // Multiple possible answers for Question 5
+    ["paris", "tokyo"],        // Multiple possible answers for Question 6
+    ["reading", "painting"] 
         ];
 
         var currentQuestionIndex = 0;
@@ -341,7 +341,7 @@
             var answerInput = document.getElementById('answer-input-' + questionIndex).value.toLowerCase();
             var correctAnswer = correctAnswers[questionIndex - 1];
 
-            if (answerInput === correctAnswer) {
+            if (correctAnswer.includes(answerInput)) {
                 currentQuestionIndex++;
                 if (currentQuestionIndex < questions.length) {
                     showNextQuestion();
@@ -384,7 +384,7 @@
 
         function displayMessageBox(questionIndex) {
             var messageBox = document.getElementById('message-box-' + questionIndex);
-            messageBox.classList.add('show'); // Add class to show message box
+            messageBox.classList.add('show'); // Add class to \how message box
         }
 
         function hideMessageBox(questionIndex) {
